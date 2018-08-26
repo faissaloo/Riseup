@@ -15,15 +15,20 @@ describe Riseup::Parser do
 			Riseup::Parser.new("",Riseup::Spec.new([]),"")
 		end
 	end
-	
+
 	it "has working default markup" do
 		assert_equal Riseup::Parser.new("*Dr. Pavel*, I'm **CIA**.\n").parse(),"<i>Dr. Pavel</i>, I'm <b>CIA</b>.<br/>"
 		assert_equal Riseup::Parser.new("\\*He wasn't alone.\\*").parse(),"*He wasn't alone.*"
 	end
+
 	it "works with custom markup" do
 		assert_equal Riseup::Parser.new("lol  \n:xdlmaotbqfhfamalam:",
 			Riseup::Spec.new([["  \n","\n"],
 		  	[":xdlmaotbqfhfamalam:","😂"]
 				])).parse(),"lol\n😂"
+	end
+
+	it "auto closes tags that were not closed in the input" do
+		assert_equal Riseup::Parser.new("*He **wasn't alone.").parse(),"<i>He <b>wasn't alone.</b></i>"
 	end
 end

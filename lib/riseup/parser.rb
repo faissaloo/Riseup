@@ -41,9 +41,10 @@ class Parser
 		if (@tokens.nil?)
 			tokens()
 		end
+
 		token_toggle=Set.new
 		new_html=Array.new
-		@tokens.each { |t|
+		@tokens.each do |t|
 			if (@spec.include?(t))
 				if (token_toggle.include?(t))
 					token_toggle.delete(t)
@@ -61,7 +62,14 @@ class Parser
 			else
 				new_html.append(t)
 			end
-		}
+		end
+
+		#Fix unterminated tokens
+		token_toggle.reverse_each do |token|
+			if (!@spec[token].substitute?())
+				new_html.append(@spec[token].finish)
+			end
+		end
 		new_html.join()
 	end
 
