@@ -1,3 +1,3 @@
-require "riseup/token_data"
-require "riseup/spec"
-require "riseup/parser"
+require 'riseup/token_data'
+require 'riseup/spec'
+require 'riseup/parser'

@@ -1,37 +1,31 @@
 require 'set'
 class TokenData
-	def initialize(start,finish=nil)
-		if (finish.nil?)
-			@substitute = start
-			@isSub=true
-		else
-			@start=start
-			@finish=finish
-			@isSub=false
-		end
-	end
+  def initialize(start, finish = nil)
+    if finish.nil?
+      @substitute = start
+      @isSub = true
+    else
+      @start = start
+      @finish = finish
+      @isSub = false
+    end
+  end
 
-	def substitute()
-		@substitute
-	end
-	
-	def start()
-		@start
-	end
+  attr_reader :substitute
 
-	def finish()
-		@finish
-	end
+  attr_reader :start
 
-	def substitute?()
-		@isSub
-	end
-	
-	def all()
-		if (substitute?())
-			[@substitute]
-		else
-			[@start,@finish]
-		end
-	end
+  attr_reader :finish
+
+  def substitute?
+    @isSub
+  end
+
+  def all
+    if substitute?
+      [@substitute]
+    else
+      [@start, @finish]
+    end
+  end
 end
